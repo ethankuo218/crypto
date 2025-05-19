@@ -1,0 +1,108 @@
+import { useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+
+interface NavItem {
+  label: string;
+  path?: string; // Optional path for Links
+  action?: () => void; // Optional action for buttons
+}
+
+interface DropdownItem {
+  label: string;
+  path: string;
+}
+
+// Define props for Header
+interface HeaderProps {
+  onOpenArticlesDialog?: () => void; // Optional prop, as not all headers might need it
+}
+
+export const Header = ({ onOpenArticlesDialog }: HeaderProps) => {
+  const location = useLocation();
+  const [isUtilsOpen, setIsUtilsOpen] = useState(false);
+
+  const navItems: NavItem[] = [
+    { label: 'Market', path: '/market' },
+    { label: 'Articles', action: onOpenArticlesDialog }, // New Articles button
+  ];
+
+  const utilsItems: DropdownItem[] = [
+    { label: 'Leverage Calculator', path: '/utils/leverage-calculator' },
+    { label: 'Contract Calculator', path: '/utils/contract-calculator' },
+  ];
+
+  return (
+    <header className="bg-[#1E2329] border-b border-[#2B3139] fixed top-0 left-0 right-0 z-40">
+      <div className="max-w-7xl mx-auto px-8">
+        <div className="flex items-center justify-between h-16">
+          {/* Logo */}
+          <div className="flex-shrink-0">
+            <Link to="/" className="text-[#EAECEF] font-bold text-xl">
+              Crypto
+            </Link>
+          </div>
+
+          {/* Navigation */}
+          <nav className="flex items-center space-x-8 mr-[120px]">
+            {navItems.map(item =>
+              item.path ? (
+                <Link
+                  key={item.label}
+                  to={item.path}
+                  className={`text-sm font-medium transition-colors duration-200 ${
+                    location.pathname === item.path
+                      ? 'text-[#F0B90B]'
+                      : 'text-[#EAECEF] hover:text-[#F0B90B]'
+                  }`}
+                >
+                  {item.label}
+                </Link>
+              ) : item.action ? (
+                <button
+                  key={item.label}
+                  onClick={item.action}
+                  className="text-sm font-medium transition-colors duration-200 text-[#EAECEF] hover:text-[#F0B90B]"
+                >
+                  {item.label}
+                </button>
+              ) : null
+            )}
+
+            {/* Utils Dropdown */}
+            <div
+              className="relative"
+              onMouseEnter={() => setIsUtilsOpen(true)}
+              onMouseLeave={() => setIsUtilsOpen(false)}
+            >
+              <button
+                className={`text-sm font-medium transition-colors duration-200 ${
+                  location.pathname.startsWith('/utils')
+                    ? 'text-[#F0B90B]'
+                    : 'text-[#EAECEF] hover:text-[#F0B90B]'
+                }`}
+              >
+                Utils
+              </button>
+
+              {isUtilsOpen && (
+                <div className="absolute left-0 top-full w-48 rounded-md shadow-lg bg-[#1E2329] border border-[#2B3139] z-50">
+                  <div className="py-1">
+                    {utilsItems.map(item => (
+                      <Link
+                        key={item.path}
+                        to={item.path}
+                        className="block px-4 py-2 text-sm text-[#EAECEF] hover:bg-[#2B3139] hover:text-[#F0B90B] transition-colors duration-200"
+                      >
+                        {item.label}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          </nav>
+        </div>
+      </div>
+    </header>
+  );
+};

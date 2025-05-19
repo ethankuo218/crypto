@@ -1,0 +1,30 @@
+# Dependencies
+node_modules
+.pnpm-store
+
+# Build outputs
+dist
+build
+
+# Development files
+.git
+.gitignore
+.env
+.env.*
+*.log
+.DS_Store
+.vscode
+.idea
+
+# Test files
+__tests__
+*.test.*
+*.spec.*
+
+# Docker files
+Dockerfile
+.dockerignore
+
+# Vercel
+.vercel
+vercel.json 
