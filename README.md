@@ -9,6 +9,10 @@ This is a monorepo managed with [Turborepo](https://turbo.build/repo) and [pnpm]
 - `apps/web`: Web application
 - `apps/api`: Backend API service
 
+## Demo
+
+A live demo of the application is available at: [https://crypto-web-vert-kappa.vercel.app/](https://crypto-web-vert-kappa.vercel.app/)
+
 ## Prerequisites
 
 - Node.js >= 18
@@ -26,8 +30,16 @@ pnpm install
 
 ```bash
 pnpm --filter web dev
-pnpm -- filter api dev
+pnpm --filter api dev
 ```
+
+## Available Scripts
+
+- `pnpm build` - Build all applications
+- `pnpm dev` - Start development servers
+- `pnpm lint` - Run linting
+- `pnpm format` - Format code with Prettier
+- `pnpm check-types` - Run TypeScript type checking
 
 ## Development
 
