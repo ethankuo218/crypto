@@ -7,11 +7,11 @@ export const MarketDashboard = () => {
 
   return (
     <div className="flex h-full">
-      <div className="flex-1 p-4">
-        <MarketChart symbol={selectedSymbol} />
-      </div>
       <div className="w-80 border-r border-[#2B3139]">
         <MyList onSymbolSelect={setSelectedSymbol} />
+      </div>
+      <div className="flex-1 p-4">
+        <MarketChart symbol={selectedSymbol} />
       </div>
     </div>
   );

@@ -58,6 +58,7 @@ function App() {
           </Routes>
         </main>
       </div>
+
       {(selectedArticleIdForSidebar || isSidebarOpen) && !isArticlesDialogOpen && (
         <Overlay isActive={isSidebarOpen} onClick={handleCloseSidebar} />
       )}

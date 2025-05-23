@@ -57,8 +57,8 @@ export const ArticleSidebar = ({ articleId, isOpen, onClose }: ArticleSidebarPro
 
   return (
     <div
-      className={`fixed top-0 right-0 h-full w-full md:w-1/3 lg:w-1/4 bg-[#1E2329] text-[#EAECEF] shadow-2xl z-50 transform transition-transform duration-300 ease-in-out flex flex-col ${
-        isOpen ? 'translate-x-0' : 'translate-x-full'
+      className={`fixed top-0 left-0 h-full w-full md:w-1/3 lg:w-1/4 bg-[#1E2329] text-[#EAECEF] shadow-2xl z-50 transform transition-transform duration-300 ease-in-out flex flex-col ${
+        isOpen ? 'translate-x-0' : '-translate-x-full'
       }`}
       aria-hidden={!isOpen}
     >
