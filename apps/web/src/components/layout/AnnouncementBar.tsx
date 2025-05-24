@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBell } from '@fortawesome/free-solid-svg-icons';
-import { articleService } from '../services/article.service';
-import { ArticleData } from '../services/types';
+import { articleService } from '../../services/article.service';
+import { ArticleData } from '../../services/types';
 
 interface SseEventData {
   type: 'connected' | 'initial' | 'article' | 'error';

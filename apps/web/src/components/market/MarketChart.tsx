@@ -9,9 +9,9 @@ import {
   HistogramSeries,
   UTCTimestamp,
 } from 'lightweight-charts';
-import { marketService } from '../services/market.service';
-import { useAsyncError } from '../hooks/useAsyncError';
-import { ErrorBoundary } from './ErrorBoundary';
+import { marketService } from '../../services/market.service';
+import { useAsyncError } from '../../hooks/useAsyncError';
+import { ErrorBoundary } from '../common/ErrorBoundary';
 
 interface MarketChartProps {
   symbol: string;

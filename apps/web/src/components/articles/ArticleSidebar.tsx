@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import { articleService } from '../services/article.service';
-import { ArticleData, ApiError } from '../services/types'; // Import ApiError
+import { articleService } from '../../services/article.service';
+import { ArticleData, ApiError } from '../../services/types';
+import { formatTime } from '../../utils/time';
 
 interface ArticleSidebarProps {
   articleId: string | null;
@@ -13,7 +14,7 @@ interface ArticleSidebarProps {
 export const ArticleSidebar = ({ articleId, isOpen, onClose }: ArticleSidebarProps) => {
   const [article, setArticle] = useState<ArticleData | null>(null);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null); // Error state now stores a simple message string
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     if (!articleId) {
@@ -34,11 +35,9 @@ export const ArticleSidebar = ({ articleId, isOpen, onClose }: ArticleSidebarPro
         const data = await articleService.getArticleById(articleId);
         setArticle(data);
       } catch (err) {
-        // Now we expect err to be our standardized ApiError (or any other error if it bypassed the interceptor somehow)
         console.error(`Error fetching article ${articleId} in component:`, err);
         if (err && typeof err === 'object' && 'message' in err) {
-          const apiErr = err as ApiError; // Type assertion to our ApiError
-          // You can customize the message further based on apiErr.status or apiErr.code if needed
+          const apiErr = err as ApiError;
           setError(apiErr.message || 'Failed to load article.');
         } else {
           setError('An unexpected error occurred.');
@@ -50,10 +49,6 @@ export const ArticleSidebar = ({ articleId, isOpen, onClose }: ArticleSidebarPro
 
     fetchArticleData();
   }, [articleId, article, loading]);
-
-  // The component is rendered by App.tsx if articleId is present (even during close animation).
-  // isOpen prop controls the visual slide in/out.
-  // If articleId becomes null (after close animation), App.tsx will stop rendering this.
 
   return (
     <div
@@ -87,10 +82,13 @@ export const ArticleSidebar = ({ articleId, isOpen, onClose }: ArticleSidebarPro
               <div className="text-center">Article data not available.</div>
             )}
             {article && (
-              <div
-                className="prose prose-sm prose-invert max-w-none prose-p:text-[#D1D5DB] prose-strong:text-[#EAECEF] prose-a:text-[#F0B90B] hover:prose-a:text-yellow-300"
-                dangerouslySetInnerHTML={{ __html: article.content }}
-              />
+              <div>
+                <p className="text-xs text-gray-400 mb-2">{formatTime(article.publishedAt)}</p>
+                <div
+                  className="prose prose-sm prose-invert max-w-none prose-p:text-[#D1D5DB] prose-strong:text-[#EAECEF] prose-a:text-[#F0B90B] hover:prose-a:text-yellow-300"
+                  dangerouslySetInnerHTML={{ __html: article.content }}
+                />
+              </div>
             )}
           </>
         )}

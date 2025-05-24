@@ -1,31 +1,31 @@
 import { useEffect, useState, useCallback, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes, faSpinner, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
-import { articleService } from '../services/article.service';
-import { ArticleData, ApiError } from '../services/types';
+import { articleService } from '../../services/article.service';
+import { ArticleData, ApiError } from '../../services/types';
+import { formatTime, formatTimeAgo } from '../../utils/time';
 
 const MIN_LOADING_DURATION = 2000; // 2 seconds
 
 // --- Time Formatting Utility ---
-function formatTimeAgo(isoDateString: string): string {
-  const date = new Date(isoDateString);
-  if (isNaN(date.getTime())) {
-    return 'Unknown time';
-  }
-  const now = new Date();
-  const seconds = Math.round((now.getTime() - date.getTime()) / 1000);
-  const minutes = Math.round(seconds / 60);
-  const hours = Math.round(minutes / 60);
-  const days = Math.round(hours / 24);
-
-  if (seconds < 5) return 'just now';
-  if (seconds < 60) return `${seconds} seconds ago`;
-  if (minutes < 60) return `${minutes} minutes ago`;
-  if (hours < 24) return `${hours} hours ago`;
-  if (days === 1) return '1 day ago';
-  return `${days} days ago`;
-}
-// --- End Time Formatting Utility ---
+// function formatTimeAgo(isoDateString: string): string {
+//   const date = new Date(isoDateString);
+//   if (isNaN(date.getTime())) {
+//     return 'Unknown time';
+//   }
+//   const now = new Date();
+//   const seconds = Math.round((now.getTime() - date.getTime()) / 1000);
+//   const minutes = Math.round(seconds / 60);
+//   const hours = Math.round(minutes / 60);
+//   const days = Math.round(hours / 24);
+//
+//   if (seconds < 5) return 'just now';
+//   if (seconds < 60) return `${seconds} seconds ago`;
+//   if (minutes < 60) return `${minutes} minutes ago`;
+//   if (hours < 24) return `${hours} hours ago`;
+//   if (days === 1) return '1 day ago';
+//   return `${days} days ago`;
+// }
 
 interface ArticlesDialogProps {
   isOpen: boolean;
@@ -92,7 +92,6 @@ export const ArticlesDialog = ({ isOpen, onClose }: ArticlesDialogProps) => {
       setCurrentPage(1);
       setHasMorePages(true);
       fetchArticlesList(1, true);
-    } else {
     }
   }, [isOpen, fetchArticlesList]);
 
