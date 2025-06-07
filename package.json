@@ -18,5 +18,8 @@
   "packageManager": "pnpm@10.11.0",
   "engines": {
     "node": ">=18"
+  },
+  "dependencies": {
+    "jsonrepair": "^3.12.0"
   }
 }
