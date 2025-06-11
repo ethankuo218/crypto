@@ -5,7 +5,12 @@
     }
   ],
   "cSpell.words": [
+    "headlessui",
     "Klines",
     "lookonchain"
-  ]
+  ],
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "explicit",
+    "source.organizeImports": "explicit"
+  }
 }

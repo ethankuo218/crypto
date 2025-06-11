@@ -1,9 +1,10 @@
-import { useEffect, useState, useCallback, useRef } from 'react';
+import { faArrowLeft, faSpinner, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes, faSpinner, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { Dialog, DialogPanel, DialogTitle } from '@headlessui/react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { articleService } from '../../services/article.service';
-import { ArticleData, ApiError } from '../../services/types';
-import { formatTime, formatTimeAgo } from '../../utils/time';
+import { ApiError, ArticleData } from '../../services/types';
+import { formatTimeAgo } from '../../utils/time';
 
 const MIN_LOADING_DURATION = 2000; // 2 seconds
 
@@ -140,104 +141,106 @@ export const ArticlesDialog = ({ isOpen, onClose }: ArticlesDialogProps) => {
     return () => listElement.removeEventListener('scroll', handleScroll);
   }, [isLoadingList, hasMorePages, currentPage, fetchArticlesList, selectedArticleDetail]);
 
-  if (!isOpen) {
-    return null;
-  }
-
   return (
-    <div
-      className="fixed inset-0 bg-black/70 z-[60] flex items-center justify-center p-4 transition-opacity duration-300 ease-in-out"
-      onClick={onClose}
-    >
-      <div
-        className="bg-[#171A1E] text-[#EAECEF] rounded-lg shadow-2xl w-[70%] h-[85%] md:w-[60%] md:h-[80%] flex flex-col overflow-hidden"
-        onClick={e => e.stopPropagation()}
-      >
-        <div className="flex items-center justify-between p-3 md:p-4 border-b border-[#2B3139] flex-shrink-0">
-          {selectedArticleDetail && (
-            <button
-              onClick={handleBackToList}
-              className="text-[#AEB4BB] hover:text-white transition-colors mr-2 md:mr-3 p-1"
-              aria-label="Back to articles list"
-            >
-              <FontAwesomeIcon icon={faArrowLeft} size="lg" />
-            </button>
-          )}
-          <h2 className="text-lg md:text-xl font-semibold text-[#F0B90B] truncate">
-            {selectedArticleDetail ? selectedArticleDetail.title : 'Recent Articles'}
-          </h2>
-          <button
-            onClick={onClose}
-            className="text-[#AEB4BB] hover:text-white transition-colors ml-auto pl-2 md:pl-3 p-1"
-            aria-label="Close dialog"
-          >
-            <FontAwesomeIcon icon={faTimes} size="lg" />
-          </button>
-        </div>
+    <Dialog open={isOpen} onClose={onClose} className="relative z-[60]">
+      {/* The backdrop, rendered as a fixed sibling to the panel container */}
+      <div className="fixed inset-0 bg-black/70" aria-hidden="true" />
 
-        <div ref={scrollableListRef} className="overflow-y-auto flex-1">
-          {selectedArticleDetail ? (
-            <div className="p-3 md:p-4">
-              {isFetchingDetail && (
-                <div className="text-center py-4">
-                  <FontAwesomeIcon icon={faSpinner} spin size="2x" className="text-[#F0B90B]" />
-                </div>
-              )}
-              {detailError && <p className="text-center text-red-400 py-4">Error: {detailError}</p>}
-              {!isFetchingDetail && !detailError && selectedArticleDetail && (
-                <div
-                  className="prose prose-sm prose-invert max-w-none prose-p:text-[#D1D5DB] prose-strong:text-[#EAECEF] prose-a:text-[#F0B90B] hover:prose-a:text-yellow-300"
-                  dangerouslySetInnerHTML={{ __html: selectedArticleDetail.content }}
-                />
-              )}
-            </div>
-          ) : (
-            <div className="p-0">
-              {isLoadingList && articles.length === 0 && (
-                <div className="text-center py-10">
-                  <FontAwesomeIcon icon={faSpinner} spin size="2x" className="text-[#F0B90B]" />
-                </div>
-              )}
-              {articles.length === 0 && !isLoadingList && !listError && (
-                <p className="text-center text-gray-400 py-10">No articles found.</p>
-              )}
-              {articles.map(article => (
-                <div
-                  key={article.id}
-                  className="flex items-start p-3 md:p-4 border-b border-[#2B3139] last:border-b-0 hover:bg-[#23282D] transition-colors duration-150 cursor-pointer group"
-                  onClick={() => handleViewArticleDetail(article.id)}
-                  role="button"
-                  tabIndex={0}
-                  onKeyDown={e => {
-                    if (e.key === 'Enter' || e.key === ' ') handleViewArticleDetail(article.id);
-                  }}
-                >
-                  <div className="flex-shrink-0 mt-1 mr-3">
-                    <div className="w-2.5 h-2.5 bg-red-500 rounded-full"></div>
+      {/* Full-screen container to center the panel */}
+      <div className="fixed inset-0 flex items-center justify-center p-4">
+        <DialogPanel className="bg-[#171A1E] text-[#EAECEF] rounded-lg shadow-2xl w-[70%] h-[85%] md:w-[60%] md:h-[80%] flex flex-col overflow-hidden">
+          {/* Header */}
+          <div className="flex items-center justify-between p-3 md:p-4 border-b border-[#2B3139] flex-shrink-0">
+            {selectedArticleDetail && (
+              <button
+                onClick={handleBackToList}
+                className="text-[#AEB4BB] hover:text-white transition-colors mr-2 md:mr-3 p-1"
+                aria-label="Back to articles list"
+              >
+                <FontAwesomeIcon icon={faArrowLeft} size="lg" />
+              </button>
+            )}
+
+            <DialogTitle className="text-lg md:text-xl font-semibold text-[#F0B90B] truncate">
+              {selectedArticleDetail ? selectedArticleDetail.title : 'Recent Articles'}
+            </DialogTitle>
+
+            <button
+              onClick={onClose}
+              className="text-[#AEB4BB] hover:text-white transition-colors ml-auto pl-2 md:pl-3 p-1"
+              aria-label="Close dialog"
+            >
+              <FontAwesomeIcon icon={faTimes} size="lg" />
+            </button>
+          </div>
+
+          {/* Content */}
+          <div ref={scrollableListRef} className="overflow-y-auto flex-1">
+            {selectedArticleDetail ? (
+              <div className="p-3 md:p-4">
+                {isFetchingDetail && (
+                  <div className="text-center py-4">
+                    <FontAwesomeIcon icon={faSpinner} spin size="2x" className="text-[#F0B90B]" />
                   </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-xs text-gray-400 mb-0.5">
-                      {formatTimeAgo(article.publishedAt || new Date().toISOString())}
-                    </p>
-                    <h3 className="text-sm md:text-md font-medium text-[#EAECEF] group-hover:text-[#F0B90B] mb-1 truncate">
-                      {article.title}
-                    </h3>
-                    <p className="text-xs text-gray-400 leading-relaxed truncate-2-lines">
-                      {article.abstract}
-                    </p>
+                )}
+                {detailError && (
+                  <p className="text-center text-red-400 py-4">Error: {detailError}</p>
+                )}
+                {!isFetchingDetail && !detailError && selectedArticleDetail && (
+                  <div
+                    className="prose prose-sm prose-invert max-w-none prose-p:text-[#D1D5DB] prose-strong:text-[#EAECEF] prose-a:text-[#F0B90B] hover:prose-a:text-yellow-300"
+                    dangerouslySetInnerHTML={{ __html: selectedArticleDetail.content }}
+                  />
+                )}
+              </div>
+            ) : (
+              <div className="p-0">
+                {isLoadingList && articles.length === 0 && (
+                  <div className="text-center py-10">
+                    <FontAwesomeIcon icon={faSpinner} spin size="2x" className="text-[#F0B90B]" />
                   </div>
-                </div>
-              ))}
-              {isLoadingList && articles.length > 0 && (
-                <div className="text-center py-4">
-                  <FontAwesomeIcon icon={faSpinner} spin size="lg" className="text-[#F0B90B]" />
-                </div>
-              )}
-              {listError && <p className="text-center text-red-400 py-4">Error: {listError}</p>}
-            </div>
-          )}
-        </div>
+                )}
+                {articles.length === 0 && !isLoadingList && !listError && (
+                  <p className="text-center text-gray-400 py-10">No articles found.</p>
+                )}
+                {articles.map(article => (
+                  <div
+                    key={article.id}
+                    className="flex items-start p-3 md:p-4 border-b border-[#2B3139] last:border-b-0 hover:bg-[#23282D] transition-colors duration-150 cursor-pointer group"
+                    onClick={() => handleViewArticleDetail(article.id)}
+                    role="button"
+                    tabIndex={0}
+                    onKeyDown={e => {
+                      if (e.key === 'Enter' || e.key === ' ') handleViewArticleDetail(article.id);
+                    }}
+                  >
+                    <div className="flex-shrink-0 mt-1 mr-3">
+                      <div className="w-2.5 h-2.5 bg-red-500 rounded-full"></div>
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-xs text-gray-400 mb-0.5">
+                        {formatTimeAgo(article.publishedAt || new Date().toISOString())}
+                      </p>
+                      <h3 className="text-sm md:text-md font-medium text-[#EAECEF] group-hover:text-[#F0B90B] mb-1 truncate">
+                        {article.title}
+                      </h3>
+                      <p className="text-xs text-gray-400 leading-relaxed truncate-2-lines">
+                        {article.abstract}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+                {isLoadingList && articles.length > 0 && (
+                  <div className="text-center py-4">
+                    <FontAwesomeIcon icon={faSpinner} spin size="lg" className="text-[#F0B90B]" />
+                  </div>
+                )}
+                {listError && <p className="text-center text-red-400 py-4">Error: {listError}</p>}
+              </div>
+            )}
+          </div>
+        </DialogPanel>
       </div>
-    </div>
+    </Dialog>
   );
 };
