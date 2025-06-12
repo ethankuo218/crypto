@@ -1,64 +1,14 @@
-import { useEffect, useReducer, useRef, useCallback, memo, useMemo } from 'react';
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { marketService } from '../../services/market.service';
 import { CryptoData } from '../../services/types';
 
 interface MyListProps {
-  onSymbolSelect: (symbol: string) => void;
   selectedSymbol?: string;
+  onSymbolSelect: (symbol: string) => void;
   onInitialData?: (firstSymbol: string) => void;
 }
 
 export const MY_SYMBOLS = ['BTCUSDT', 'ETHUSDT', 'SOLUSDT', 'TRUMPUSDT'];
-
-type State = {
-  isInitialized: boolean;
-  cryptoData: Map<string, CryptoData>;
-  error: string | null;
-};
-
-type Action =
-  | { type: 'INITIALIZE_DATA'; payload: CryptoData }
-  | { type: 'UPDATE_DATA'; payload: CryptoData }
-  | { type: 'SET_ERROR'; payload: string }
-  | { type: 'RESET' };
-
-const initialState: State = {
-  isInitialized: false,
-  cryptoData: new Map(),
-  error: null,
-};
-
-function reducer(state: State, action: Action): State {
-  switch (action.type) {
-    case 'INITIALIZE_DATA': {
-      const newMap = new Map(state.cryptoData);
-      newMap.set(action.payload.symbol, action.payload);
-      const isInitialized = newMap.size === MY_SYMBOLS.length;
-      return {
-        ...state,
-        cryptoData: newMap,
-        isInitialized,
-      };
-    }
-    case 'UPDATE_DATA': {
-      const newMap = new Map(state.cryptoData);
-      newMap.set(action.payload.symbol, action.payload);
-      return {
-        ...state,
-        cryptoData: newMap,
-      };
-    }
-    case 'SET_ERROR':
-      return {
-        ...state,
-        error: action.payload,
-      };
-    case 'RESET':
-      return initialState;
-    default:
-      return state;
-  }
-}
 
 interface CryptoItemProps {
   symbol: string;
@@ -71,6 +21,7 @@ interface CryptoItemProps {
 const CryptoItem = memo(
   ({ symbol, price, priceChangePercent, isSelected, onSelect }: CryptoItemProps) => {
     const isUp = parseFloat(priceChangePercent) >= 0;
+
     const formattedPrice = useMemo(
       () =>
         parseFloat(price).toLocaleString(undefined, {
@@ -129,7 +80,8 @@ const CryptoItem = memo(
 CryptoItem.displayName = 'CryptoItem';
 
 export const MyList = ({ onSymbolSelect, selectedSymbol, onInitialData }: MyListProps) => {
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [cryptoData, setCryptoData] = useState<Map<string, CryptoData>>(new Map());
+  const [error, setError] = useState<string | null>(null);
   const initializedRef = useRef(false);
 
   const handleSymbolSelect = useCallback(
@@ -140,56 +92,59 @@ export const MyList = ({ onSymbolSelect, selectedSymbol, onInitialData }: MyList
   );
 
   const sortedCryptoData = useMemo(() => {
-    const data = Array.from(state.cryptoData.values());
+    const data = Array.from(cryptoData.values());
     return data.sort((a, b) => parseFloat(b.priceChangePercent) - parseFloat(a.priceChangePercent));
-  }, [state.cryptoData]);
+  }, [cryptoData]);
+
+  const isInitialized = cryptoData.size === MY_SYMBOLS.length;
 
   useEffect(() => {
-    if (state.isInitialized && !initializedRef.current) {
+    if (isInitialized && !initializedRef.current) {
       initializedRef.current = true;
       const firstSymbol = sortedCryptoData[0]?.symbol;
       if (firstSymbol) {
         onInitialData?.(firstSymbol);
       }
     }
-  }, [state.isInitialized, sortedCryptoData, onInitialData]);
+  }, [isInitialized, sortedCryptoData, onInitialData]);
 
   useEffect(() => {
     const handleMarketUpdate = (data: CryptoData) => {
-      if (!state.isInitialized) {
-        dispatch({ type: 'INITIALIZE_DATA', payload: data });
-      } else {
-        dispatch({ type: 'UPDATE_DATA', payload: data });
-      }
+      setCryptoData(prev => {
+        const newMap = new Map(prev);
+        newMap.set(data.symbol, data);
+        return newMap;
+      });
     };
 
     const unsubscribe = marketService.subscribeToMarketUpdates(MY_SYMBOLS, {
       onMessage: handleMarketUpdate,
       onError: (error: Error | Event) => {
         console.error('MyList: Connection error:', error);
-        dispatch({ type: 'SET_ERROR', payload: 'Failed to connect to real-time updates' });
+        setError('Failed to connect to real-time updates');
       },
     });
 
     return () => {
       unsubscribe();
-      dispatch({ type: 'RESET' });
+      setCryptoData(new Map());
+      setError(null);
       initializedRef.current = false;
     };
-  }, []); // Remove state.isInitialized dependency
+  }, []);
 
   return (
     <div className="w-full px-2 pt-2 pb-4">
-      {state.error && <div className="text-[#F6465D] text-sm mb-2">{state.error}</div>}
+      {error && <div className="text-[#F6465D] text-sm mb-2">{error}</div>}
       <div className="flex flex-col gap-2">
-        {!state.isInitialized && !state.error && (
+        {!isInitialized && !error && (
           <div className="text-[#848E9C] text-sm flex items-center justify-center h-32">
             <div className="animate-pulse">Loading market data...</div>
           </div>
         )}
 
-        {state.isInitialized &&
-          !state.error &&
+        {isInitialized &&
+          !error &&
           sortedCryptoData.map(crypto => (
             <CryptoItem
               key={crypto.symbol}

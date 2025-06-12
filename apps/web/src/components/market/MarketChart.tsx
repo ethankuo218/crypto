@@ -190,7 +190,6 @@ const MarketChartContent = ({ symbol }: MarketChartProps) => {
       setError(error.message);
     }
 
-    // Cleanup subscription on unmount or when symbol/interval changes
     return () => {
       if (unsubscribe) {
         unsubscribe();

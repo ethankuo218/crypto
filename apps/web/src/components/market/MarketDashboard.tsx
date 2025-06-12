@@ -18,6 +18,7 @@ const MarketDashboard: React.FC = () => {
           onInitialData={handleSymbolSelect}
         />
       </div>
+
       <div className="flex-1 p-4">
         <MarketChart symbol={selectedSymbol} />
       </div>
