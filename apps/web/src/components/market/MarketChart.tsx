@@ -1,16 +1,15 @@
-import { useEffect, useRef, useState } from 'react';
 import {
-  createChart,
-  IChartApi,
-  ISeriesApi,
   CandlestickData,
   CandlestickSeries,
+  createChart,
   HistogramData,
   HistogramSeries,
+  IChartApi,
+  ISeriesApi,
   UTCTimestamp,
 } from 'lightweight-charts';
+import { useEffect, useRef, useState } from 'react';
 import { marketService } from '../../services/market.service';
-import { useAsyncError } from '../../hooks/useAsyncError';
 import { ErrorBoundary } from '../common/ErrorBoundary';
 
 interface MarketChartProps {
@@ -33,7 +32,6 @@ const MarketChartContent = ({ symbol }: MarketChartProps) => {
   const candlestickSeriesRef = useRef<ISeriesApi<'Candlestick'> | null>(null);
   const volumeSeriesRef = useRef<ISeriesApi<'Histogram'> | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const throwAsyncError = useAsyncError();
 
   // Initialize chart
   useEffect(() => {
@@ -190,16 +188,14 @@ const MarketChartContent = ({ symbol }: MarketChartProps) => {
       console.error('Error subscribing to kline stream:', err);
       const error = err instanceof Error ? err : new Error('Failed to subscribe to kline stream');
       setError(error.message);
-      throwAsyncError(error);
     }
 
-    // Cleanup subscription on unmount or when symbol/interval changes
     return () => {
       if (unsubscribe) {
         unsubscribe();
       }
     };
-  }, [symbol, interval, throwAsyncError]);
+  }, [symbol, interval]);
 
   return (
     <div className="w-full">

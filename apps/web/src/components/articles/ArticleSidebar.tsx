@@ -1,8 +1,7 @@
-import { useEffect, useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useQuery } from '@tanstack/react-query';
 import { articleService } from '../../services/article.service';
-import { ArticleData, ApiError } from '../../services/types';
 import { formatTime } from '../../utils/time';
 
 interface ArticleSidebarProps {
@@ -12,43 +11,15 @@ interface ArticleSidebarProps {
 }
 
 export const ArticleSidebar = ({ articleId, isOpen, onClose }: ArticleSidebarProps) => {
-  const [article, setArticle] = useState<ArticleData | null>(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    if (!articleId) {
-      setArticle(null);
-      setLoading(false);
-      setError(null);
-      return;
-    }
-
-    if (article?.id === articleId && !loading) {
-      return;
-    }
-
-    const fetchArticleData = async () => {
-      setLoading(true);
-      setError(null);
-      try {
-        const data = await articleService.getArticleById(articleId);
-        setArticle(data);
-      } catch (err) {
-        console.error(`Error fetching article ${articleId} in component:`, err);
-        if (err && typeof err === 'object' && 'message' in err) {
-          const apiErr = err as ApiError;
-          setError(apiErr.message || 'Failed to load article.');
-        } else {
-          setError('An unexpected error occurred.');
-        }
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchArticleData();
-  }, [articleId, article, loading]);
+  const {
+    data: article,
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ['article', articleId],
+    queryFn: () => articleService.getArticleById(articleId!),
+    enabled: !!articleId, // Only run query when articleId exists
+  });
 
   return (
     <div
@@ -60,7 +31,7 @@ export const ArticleSidebar = ({ articleId, isOpen, onClose }: ArticleSidebarPro
       {/* Sidebar Header */}
       <div className="flex items-center justify-between p-4 border-b border-[#2B3139] flex-shrink-0">
         <h2 className="text-xl font-semibold text-[#F0B90B] truncate pr-2">
-          {loading && articleId ? 'Loading...' : article?.title || (articleId ? 'Article' : '')}
+          {isLoading && articleId ? 'Loading...' : article?.title || (articleId ? 'Article' : '')}
         </h2>
         <button
           onClick={onClose}
@@ -76,9 +47,9 @@ export const ArticleSidebar = ({ articleId, isOpen, onClose }: ArticleSidebarPro
         {/* Only show content if an articleId is present, otherwise it might flash old content during close */}
         {articleId && (
           <>
-            {loading && <div className="text-center">Loading content...</div>}
-            {error && <div className="text-center text-red-400">Error: {error}</div>}
-            {!loading && !error && !article && (
+            {isLoading && <div className="text-center">Loading content...</div>}
+            {error && <div className="text-center text-red-400">Error: {error.message}</div>}
+            {!isLoading && !error && !article && (
               <div className="text-center">Article data not available.</div>
             )}
             {article && (
