@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import logo from '../../assets/logo.svg';
 import { ArticlesDialog } from '../articles/ArticlesDialog';
 
 interface NavItem {
@@ -37,7 +38,7 @@ export const Header = () => {
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
             <div className="flex gap-2">
-              <img src={'../../../assets/logo.svg'} />
+              <img src={logo} />
               <Link to="/" className="text-[#EAECEF] font-bold text-xl">
                 Crypto
               </Link>
