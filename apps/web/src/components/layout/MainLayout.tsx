@@ -7,7 +7,7 @@ import { Header } from './Header';
 
 export const MainLayout = () => {
   return (
-    <div className="h-screen w-screen bg-[#0B0E11] flex flex-col">
+    <div className="h-screen w-screen bg-[#18191D] flex flex-col">
       <Header />
 
       <div className="flex-1 flex flex-col overflow-auto pt-16">
