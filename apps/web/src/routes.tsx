@@ -4,6 +4,10 @@ const MarketDashboard = lazy(() => import('./pages/MarketDashboard'));
 
 export const routes = [
   {
+    path: '/',
+    element: <MarketDashboard />,
+  },
+  {
     path: '/market',
     element: <MarketDashboard />,
   },
