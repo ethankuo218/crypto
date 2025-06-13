@@ -1,6 +1,5 @@
-import { EventEmitter } from 'events';
 import axios from 'axios';
-import { jsonrepair } from 'jsonrepair';
+import { EventEmitter } from 'events';
 
 export interface Article {
   id: string;
@@ -80,20 +79,13 @@ export class LookOnChainScraper extends EventEmitter {
 
       let dataToParse = response.data;
       if (typeof dataToParse === 'string') {
-        try {
-          dataToParse = jsonrepair(dataToParse);
-          return JSON.parse(dataToParse);
-        } catch (e) {
-          console.error('Failed to parse JSON after jsonrepair:', {
-            error: e instanceof Error ? e.message : String(e),
-            dataPreview: dataToParse.substring(0, 200) + '...',
-            rawDataPreview: response.data.substring(0, 200) + '...'
-          });
-          throw new Error('Failed to parse JSON response after jsonrepair');
-        }
+        // Attempt to fix invalid escape sequences by removing the offending backslash.
+        // An offending backslash is one that is not part of a valid JSON escape
+        // sequence (e.g., \", \\, \/, \b, \f, \n, \r, \t, or \uXXXX).
+        dataToParse = dataToParse.replace(/\\(?!["\\/bfnrt]|u[0-9a-fA-F]{4})/g, '');
       }
 
-      const data = dataToParse;
+      const data = JSON.parse(dataToParse);
 
       if (data.success !== 'Y') {
         throw new Error(`API returned error: ${data.message || 'Unknown error'}`);
