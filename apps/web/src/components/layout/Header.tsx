@@ -36,7 +36,8 @@ export const Header = () => {
         <div className="max-w-7xl mx-auto px-8">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
-            <div className="flex-shrink-0">
+            <div className="flex gap-2">
+              <img src={'../../../assets/logo.svg'} />
               <Link to="/" className="text-[#EAECEF] font-bold text-xl">
                 Crypto
               </Link>
@@ -51,8 +52,8 @@ export const Header = () => {
                     to={item.path}
                     className={`text-sm font-medium transition-colors duration-200 ${
                       location.pathname === item.path
-                        ? 'text-[#F0B90B]'
-                        : 'text-[#EAECEF] hover:text-[#F0B90B]'
+                        ? 'text-[#00EFDF]'
+                        : 'text-[#EAECEF] hover:text-[#00EFDF]'
                     }`}
                   >
                     {item.label}
@@ -61,7 +62,7 @@ export const Header = () => {
                   <button
                     key={item.label}
                     onClick={item.action}
-                    className="text-sm font-medium transition-colors duration-200 text-[#EAECEF] hover:text-[#F0B90B]"
+                    className="text-sm font-medium transition-colors duration-200 text-[#EAECEF] hover:text-[#00EFDF]"
                   >
                     {item.label}
                   </button>
@@ -77,8 +78,8 @@ export const Header = () => {
                 <button
                   className={`text-sm font-medium transition-colors duration-200 ${
                     location.pathname.startsWith('/utils')
-                      ? 'text-[#F0B90B]'
-                      : 'text-[#EAECEF] hover:text-[#F0B90B]'
+                      ? 'text-[#00EFDF]'
+                      : 'text-[#EAECEF] hover:text-[#00EFDF]'
                   }`}
                 >
                   Utils
@@ -91,7 +92,7 @@ export const Header = () => {
                         <Link
                           key={item.path}
                           to={item.path}
-                          className="block px-4 py-2 text-sm text-[#EAECEF] hover:bg-[#2B3139] hover:text-[#F0B90B] transition-colors duration-200"
+                          className="block px-4 py-2 text-sm text-[#EAECEF] hover:bg-[#2B3139] hover:text-[#00EFDF] transition-colors duration-200"
                         >
                           {item.label}
                         </Link>

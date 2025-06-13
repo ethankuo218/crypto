@@ -26,7 +26,7 @@ export const AnnouncementBar = () => {
     <>
       <div
         key={latestArticle.id + '-' + animationKey}
-        className={`bg-yellow-400 text-black p-2 text-center text-sm flex items-center justify-center ${
+        className={`bg-[#00EFDF] text-black p-2 text-center text-sm flex items-center justify-center ${
           !isInitialLoad ? 'slide-down-fade-in' : ''
         }`}
       >

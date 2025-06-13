@@ -45,7 +45,7 @@ const CryptoItem = memo(
         onClick={handleClick}
         className={`bg-[#1E2329] rounded-lg px-3 py-2 transition-all hover:bg-[#2B3139] border ${
           isSelected
-            ? 'border-[#F0B90B] bg-[#2B3139] shadow-[0_0_0_1px_#F0B90B]'
+            ? 'border-[#00EFDF] bg-[#2B3139] shadow-[0_0_0_1px_#00EFDF]'
             : 'border-[#2B3139]'
         } cursor-pointer w-full flex items-center justify-between`}
       >

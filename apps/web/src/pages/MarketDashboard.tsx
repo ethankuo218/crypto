@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { MarketChart } from './MarketChart';
-import { MyList } from './MyList';
+import { MarketChart } from '../components/market/MarketChart';
+import { MyList } from '../components/market/MyList';
 
 const MarketDashboard: React.FC = () => {
   const [selectedSymbol, setSelectedSymbol] = useState<string>('BTCUSDT');
