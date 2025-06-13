@@ -4,13 +4,20 @@
       "mode": "auto"
     }
   ],
-  "cSpell.words": [
-    "headlessui",
-    "Klines",
-    "lookonchain"
-  ],
+  "cSpell.words": ["headlessui", "Klines", "lookonchain"],
   "editor.codeActionsOnSave": {
     "source.fixAll": "explicit",
     "source.organizeImports": "explicit"
+  },
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   }
 }

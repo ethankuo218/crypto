@@ -1,14 +1,11 @@
 import { Suspense } from 'react';
+import { Outlet } from 'react-router-dom';
 import { ErrorBoundary } from '../common/ErrorBoundary';
 import { LoadingSpinner } from '../common/LoadingSpinner';
 import { AnnouncementBar } from './AnnouncementBar';
 import { Header } from './Header';
 
-interface MainLayoutProps {
-  children: React.ReactNode;
-}
-
-export const MainLayout = ({ children }: MainLayoutProps) => {
+export const MainLayout = () => {
   return (
     <div className="h-screen w-screen bg-[#0B0E11] flex flex-col">
       <Header />
@@ -18,7 +15,7 @@ export const MainLayout = ({ children }: MainLayoutProps) => {
 
         <main className="flex-1">
           <ErrorBoundary>
-            <Suspense fallback={<LoadingSpinner />}>{children}</Suspense>
+            <Suspense fallback={<LoadingSpinner />}>{<Outlet />}</Suspense>
           </ErrorBoundary>
         </main>
       </div>
