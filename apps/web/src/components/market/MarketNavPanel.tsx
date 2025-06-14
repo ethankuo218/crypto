@@ -37,7 +37,7 @@ const MarketNavPanel: React.FC = () => {
       <TabGroup className="flex flex-col gap-4" onChange={index => setActiveIndex(index)}>
         <TabList className="relative h-8 w-full">
           <div
-            className="absolute top-0 w-[100px] h-full bg-primary rounded-full transition-all duration-300"
+            className="absolute top-0 w-[100px] h-full border-b-[3px] border-primary transition-all duration-300"
             style={{ transform: `translateX(${activeIndex * 116}px)` }}
           />
 
@@ -47,8 +47,8 @@ const MarketNavPanel: React.FC = () => {
                 key={index}
                 className={({ selected, hover }) =>
                   `w-[100px] h-full flex items-center justify-center text-sm font-medium ${
-                    selected || hover ? 'text-background' : 'text-text-secondary'
-                  } focus:outline-none hover:bg-primary/75 transition-all duration-300 rounded-full`
+                    selected || hover ? 'text-primary' : 'text-text-secondary'
+                  } focus:outline-none`
                 }
               >
                 {item.label}
