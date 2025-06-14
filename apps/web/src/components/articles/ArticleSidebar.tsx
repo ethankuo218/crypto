@@ -1,7 +1,7 @@
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useQuery } from '@tanstack/react-query';
-import { articleService } from '../../services/article.service';
+import articleService from '../../services/article.service';
 import { formatTime } from '../../utils/time';
 
 interface ArticleSidebarProps {
@@ -10,7 +10,7 @@ interface ArticleSidebarProps {
   onClose: () => void;
 }
 
-export const ArticleSidebar = ({ articleId, isOpen, onClose }: ArticleSidebarProps) => {
+const ArticleSidebar: React.FC<ArticleSidebarProps> = ({ articleId, isOpen, onClose }) => {
   const {
     data: article,
     isLoading,
@@ -30,7 +30,7 @@ export const ArticleSidebar = ({ articleId, isOpen, onClose }: ArticleSidebarPro
     >
       {/* Sidebar Header */}
       <div className="flex items-center justify-between p-4 border-b border-[#2B3139] flex-shrink-0">
-        <h2 className="text-xl font-semibold text-[#F0B90B] truncate pr-2">
+        <h2 className="text-xl font-semibold text-primary truncate pr-2">
           {isLoading && articleId ? 'Loading...' : article?.title || (articleId ? 'Article' : '')}
         </h2>
         <button
@@ -56,7 +56,7 @@ export const ArticleSidebar = ({ articleId, isOpen, onClose }: ArticleSidebarPro
               <div>
                 <p className="text-xs text-gray-400 mb-2">{formatTime(article.publishedAt)}</p>
                 <div
-                  className="prose prose-sm prose-invert max-w-none prose-p:text-[#D1D5DB] prose-strong:text-[#EAECEF] prose-a:text-[#F0B90B] hover:prose-a:text-yellow-300"
+                  className="prose prose-sm prose-invert max-w-none prose-p:text-[#D1D5DB] prose-strong:text-[#EAECEF] prose-a:text-primary hover:prose-a:text-yellow-300"
                   dangerouslySetInnerHTML={{ __html: article.content }}
                 />
               </div>
@@ -67,3 +67,5 @@ export const ArticleSidebar = ({ articleId, isOpen, onClose }: ArticleSidebarPro
     </div>
   );
 };
+
+export default ArticleSidebar;

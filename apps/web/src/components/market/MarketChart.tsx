@@ -9,8 +9,8 @@ import {
   UTCTimestamp,
 } from 'lightweight-charts';
 import { useEffect, useRef, useState } from 'react';
-import { marketService } from '../../services/market.service';
-import { ErrorBoundary } from '../common/ErrorBoundary';
+import marketService from '../../services/market.service';
+import ErrorBoundary from '../common/ErrorBoundary';
 
 interface MarketChartProps {
   symbol: string;
@@ -25,7 +25,7 @@ const INTERVALS = [
   { label: '1d', value: '1d' },
 ];
 
-const MarketChartContent = ({ symbol }: MarketChartProps) => {
+const MarketChartContent: React.FC<MarketChartProps> = ({ symbol }) => {
   const chartContainerRef = useRef<HTMLDivElement>(null);
   const [interval, setInterval] = useState('1h');
   const chartRef = useRef<IChartApi | null>(null);
@@ -202,7 +202,7 @@ const MarketChartContent = ({ symbol }: MarketChartProps) => {
       <div className="flex justify-between items-center mb-4">
         <div className="flex items-center gap-4">
           <h2 className="text-[#EAECEF] text-xl font-medium">{symbol}</h2>
-          {error && <span className="text-[#F6465D] text-sm">{error}</span>}
+          {error && <span className="text-fall text-sm">{error}</span>}
         </div>
         <select
           value={interval}
@@ -221,8 +221,10 @@ const MarketChartContent = ({ symbol }: MarketChartProps) => {
   );
 };
 
-export const MarketChart = (props: MarketChartProps) => (
+const MarketChart: React.FC<MarketChartProps> = (props: MarketChartProps) => (
   <ErrorBoundary>
     <MarketChartContent {...props} />
   </ErrorBoundary>
 );
+
+export default MarketChart;

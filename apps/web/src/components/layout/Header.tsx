@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import logo from '../../assets/logo.svg';
-import { ArticlesDialog } from '../articles/ArticlesDialog';
+import ArticlesDialog from '../articles/ArticlesDialog';
 
 interface NavItem {
   label: string;
@@ -14,7 +14,7 @@ interface DropdownItem {
   path: string;
 }
 
-export const Header = () => {
+const Header: React.FC = () => {
   const location = useLocation();
   const [isUtilsOpen, setIsUtilsOpen] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -33,13 +33,14 @@ export const Header = () => {
 
   return (
     <>
-      <header className="bg-[#1E2329] border-b border-[#2B3139] fixed top-0 left-0 right-0 z-40">
-        <div className="max-w-7xl mx-auto px-8">
-          <div className="flex items-center justify-between h-16">
+      <header className="bg-[#141416] fixed top-0 left-0 right-0 z-40">
+        <div className="max-w-8xl mx-auto px-8">
+          <div className="flex items-center justify-between h-12">
             {/* Logo */}
-            <div className="flex gap-2">
+            <div className="flex gap-1">
               <img src={logo} />
-              <Link to="/" className="text-[#EAECEF] font-bold text-xl">
+
+              <Link to="/" className="text-text-primary font-bold text-2xl">
                 Crypto
               </Link>
             </div>
@@ -53,8 +54,8 @@ export const Header = () => {
                     to={item.path}
                     className={`text-sm font-medium transition-colors duration-200 ${
                       location.pathname === item.path
-                        ? 'text-[#00EFDF]'
-                        : 'text-[#EAECEF] hover:text-[#00EFDF]'
+                        ? 'text-primary'
+                        : 'text-text-primary hover:text-primary'
                     }`}
                   >
                     {item.label}
@@ -63,7 +64,7 @@ export const Header = () => {
                   <button
                     key={item.label}
                     onClick={item.action}
-                    className="text-sm font-medium transition-colors duration-200 text-[#EAECEF] hover:text-[#00EFDF]"
+                    className="text-sm font-medium transition-colors duration-200 text-text-primary hover:text-primary"
                   >
                     {item.label}
                   </button>
@@ -79,8 +80,8 @@ export const Header = () => {
                 <button
                   className={`text-sm font-medium transition-colors duration-200 ${
                     location.pathname.startsWith('/utils')
-                      ? 'text-[#00EFDF]'
-                      : 'text-[#EAECEF] hover:text-[#00EFDF]'
+                      ? 'text-primary'
+                      : 'text-text-primary hover:text-primary'
                   }`}
                 >
                   Utils
@@ -93,7 +94,7 @@ export const Header = () => {
                         <Link
                           key={item.path}
                           to={item.path}
-                          className="block px-4 py-2 text-sm text-[#EAECEF] hover:bg-[#2B3139] hover:text-[#00EFDF] transition-colors duration-200"
+                          className="block px-4 py-2 text-sm text-text-primary hover:bg-[#2B3139] hover:text-primary transition-colors duration-200"
                         >
                           {item.label}
                         </Link>
@@ -111,3 +112,5 @@ export const Header = () => {
     </>
   );
 };
+
+export default Header;

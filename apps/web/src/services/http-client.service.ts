@@ -165,4 +165,6 @@ class HttpClient {
   }
 }
 
-export const httpClient = HttpClient.getInstance();
+const httpClient = HttpClient.getInstance();
+
+export default httpClient;

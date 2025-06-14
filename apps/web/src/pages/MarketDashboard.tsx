@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { MarketChart } from '../components/market/MarketChart';
+import MarketChart from '../components/market/MarketChart';
 import { MyList } from '../components/market/MyList';
 
 const MarketDashboard: React.FC = () => {

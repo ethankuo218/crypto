@@ -1,4 +1,4 @@
-import { httpClient } from './http-client.service';
+import httpClient from './http-client.service';
 import { ArticleData, PaginatedArticlesResponse } from './types';
 
 interface SseEventData {
@@ -8,7 +8,7 @@ interface SseEventData {
   message?: string; // For 'error' type
 }
 
-export const articleService = {
+const articleService = {
   /**
    * Get a single article by its ID
    */
@@ -33,7 +33,7 @@ export const articleService = {
    */
   subscribeToAnnouncements: (callbacks: {
     onMessage: (data: SseEventData) => void;
-    onError?: (error: Event) => void;
+    onError?: (error: Error | Event) => void;
     onOpen?: (event: Event) => void;
   }): (() => void) => {
     return httpClient.subscribeToSSE('/lookonchain/articles/stream', {
@@ -51,3 +51,5 @@ export const articleService = {
     });
   },
 };
+
+export default articleService;

@@ -2,9 +2,9 @@ import { faBell } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState } from 'react';
 import { useLatestArticleState } from '../../hooks/useLatestArticleState';
-import { ArticleSidebar } from '../articles/ArticleSidebar';
+import ArticleSidebar from '../articles/ArticleSidebar';
 
-export const AnnouncementBar = () => {
+const AnnouncementBar: React.FC = () => {
   const { latestArticle, error, isInitialLoad, animationKey } = useLatestArticleState();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
@@ -26,7 +26,7 @@ export const AnnouncementBar = () => {
     <>
       <div
         key={latestArticle.id + '-' + animationKey}
-        className={`bg-[#00EFDF] text-black p-2 text-center text-sm flex items-center justify-center ${
+        className={`bg-primary text-black p-2 text-center text-sm flex items-center justify-center ${
           !isInitialLoad ? 'slide-down-fade-in' : ''
         }`}
       >
@@ -55,3 +55,5 @@ export const AnnouncementBar = () => {
     </>
   );
 };
+
+export default AnnouncementBar;

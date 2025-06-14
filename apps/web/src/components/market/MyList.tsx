@@ -1,5 +1,5 @@
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { marketService } from '../../services/market.service';
+import marketService from '../../services/market.service';
 import { CryptoData } from '../../services/types';
 
 interface MyListProps {
@@ -44,9 +44,7 @@ const CryptoItem = memo(
       <div
         onClick={handleClick}
         className={`bg-[#1E2329] rounded-lg px-3 py-2 transition-all hover:bg-[#2B3139] border ${
-          isSelected
-            ? 'border-[#00EFDF] bg-[#2B3139] shadow-[0_0_0_1px_#00EFDF]'
-            : 'border-[#2B3139]'
+          isSelected ? 'border-primary bg-[#2B3139] shadow-[0_0_0_1px_#00EFDF]' : 'border-[#2B3139]'
         } cursor-pointer w-full flex items-center justify-between`}
       >
         <span className="font-medium text-[#EAECEF] tracking-wide text-base">
@@ -57,7 +55,7 @@ const CryptoItem = memo(
           <span className="font-mono font-medium text-[#EAECEF] text-xs">${formattedPrice}</span>
           <span
             className={`flex items-center font-medium text-xs px-1.5 py-0.5 rounded ${
-              isUp ? 'bg-[#0ECB81]/10 text-[#0ECB81]' : 'bg-[#F6465D]/10 text-[#F6465D]'
+              isUp ? 'bg-rise/10 text-rise' : 'bg-fall/10 text-fall'
             }`}
           >
             <span className="mr-1 text-sm">{isUp ? '▲' : '▼'}</span>
@@ -135,7 +133,7 @@ export const MyList = ({ onSymbolSelect, selectedSymbol, onInitialData }: MyList
 
   return (
     <div className="w-full px-2 pt-2 pb-4">
-      {error && <div className="text-[#F6465D] text-sm mb-2">{error}</div>}
+      {error && <div className="text-fall text-sm mb-2">{error}</div>}
       <div className="flex flex-col gap-2">
         {!isInitialized && !error && (
           <div className="text-[#848E9C] text-sm flex items-center justify-center h-32">

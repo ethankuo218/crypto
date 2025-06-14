@@ -2,7 +2,18 @@
 export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        primary: '#00EFDF',
+        background: '#18191D',
+        text: {
+          primary: '#FFFFFF',
+          secondary: '#B1B5C3',
+        },
+        rise: '#0ECB81',
+        fall: '#F6465D',
+      },
+    },
   },
   plugins: [
     function ({ addUtilities }) {

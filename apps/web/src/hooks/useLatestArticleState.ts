@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { articleService } from '../services/article.service';
+import articleService from '../services/article.service';
 import { ArticleData } from '../services/types';
 
 interface SseEventData {
@@ -51,7 +51,7 @@ export const useLatestArticleState = (): UseSSEReturn => {
   useEffect(() => {
     const unsubscribe = articleService.subscribeToAnnouncements({
       onMessage: handleSSEMessage,
-      onError: (error: Event) => {
+      onError: (error: Error | Event) => {
         console.error('EventSource failed:', error);
         setError('Connection failed. Retrying...');
       },

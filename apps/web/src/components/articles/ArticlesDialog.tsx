@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Dialog, DialogPanel, DialogTitle } from '@headlessui/react';
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { articleService } from '../../services/article.service';
+import articleService from '../../services/article.service';
 import { ArticleData } from '../../services/types';
 import { formatTimeAgo } from '../../utils/time';
 
@@ -29,7 +29,7 @@ const ArticleListItem = ({ article, onClick }: { article: ArticleData; onClick: 
       <p className="text-xs text-gray-400 mb-0.5">
         {formatTimeAgo(article.publishedAt || new Date().toISOString())}
       </p>
-      <h3 className="text-sm md:text-md font-medium text-[#EAECEF] group-hover:text-[#F0B90B] mb-1 truncate">
+      <h3 className="text-sm md:text-md font-medium text-[#EAECEF] group-hover:text-primary mb-1 truncate">
         {article.title}
       </h3>
       <p className="text-xs text-gray-400 leading-relaxed truncate-3-lines">{article.abstract}</p>
@@ -40,7 +40,7 @@ const ArticleListItem = ({ article, onClick }: { article: ArticleData; onClick: 
 const ArticleDetail = ({ article }: { article: ArticleData; onBack: () => void }) => (
   <div className="p-4 md:p-10">
     <div
-      className="prose prose-sm prose-invert max-w-none prose-p:text-[#D1D5DB] prose-strong:text-[#EAECEF] prose-a:text-[#F0B90B] hover:prose-a:text-yellow-300"
+      className="prose prose-sm prose-invert max-w-none prose-p:text-[#D1D5DB] prose-strong:text-[#EAECEF] prose-a:text-primary hover:prose-a:text-yellow-300"
       dangerouslySetInnerHTML={{ __html: article.content }}
     />
   </div>
@@ -48,11 +48,11 @@ const ArticleDetail = ({ article }: { article: ArticleData; onBack: () => void }
 
 const LoadingSpinner = ({ size = 'lg' }: { size?: 'lg' | '2x' }) => (
   <div className="text-center py-4">
-    <FontAwesomeIcon icon={faSpinner} spin size={size} className="text-[#F0B90B]" />
+    <FontAwesomeIcon icon={faSpinner} spin size={size} className="text-primary" />
   </div>
 );
 
-export const ArticlesDialog = ({ isOpen, onClose }: ArticlesDialogProps) => {
+const ArticlesDialog: React.FC<ArticlesDialogProps> = ({ isOpen, onClose }) => {
   const [selectedArticleId, setSelectedArticleId] = useState<string | null>(null);
   const scrollableListRef = useRef<HTMLDivElement>(null);
   const articlesPerPage = 10;
@@ -131,7 +131,7 @@ export const ArticlesDialog = ({ isOpen, onClose }: ArticlesDialogProps) => {
               </button>
             )}
 
-            <DialogTitle className="text-lg md:text-xl font-semibold text-[#F0B90B] truncate">
+            <DialogTitle className="text-lg md:text-xl font-semibold text-primary truncate">
               {selectedArticle ? selectedArticle.title : 'Recent Articles'}
             </DialogTitle>
 
@@ -190,3 +190,5 @@ export const ArticlesDialog = ({ isOpen, onClose }: ArticlesDialogProps) => {
     </Dialog>
   );
 };
+
+export default ArticlesDialog;

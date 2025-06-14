@@ -10,7 +10,7 @@ interface State {
   error: Error | null;
 }
 
-export class ErrorBoundary extends React.Component<Props, State> {
+class ErrorBoundary extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = { hasError: false, error: null };
@@ -29,8 +29,8 @@ export class ErrorBoundary extends React.Component<Props, State> {
     if (this.state.hasError) {
       return (
         this.props.fallback || (
-          <div className="p-4 bg-[#1E2329] border border-[#F6465D] rounded-lg">
-            <h2 className="text-[#F6465D] text-lg font-medium mb-2">Something went wrong</h2>
+          <div className="p-4 bg-[#1E2329] border border-fall rounded-lg">
+            <h2 className="text-fall text-lg font-medium mb-2">Something went wrong</h2>
             <p className="text-[#EAECEF] text-sm">{this.state.error?.message}</p>
           </div>
         )
@@ -40,3 +40,5 @@ export class ErrorBoundary extends React.Component<Props, State> {
     return this.props.children;
   }
 }
+
+export default ErrorBoundary;

@@ -1,7 +1,7 @@
-import { httpClient } from './http-client.service';
+import httpClient from './http-client.service';
 import { KlineData } from './types';
 
-export const marketService = {
+const marketService = {
   /**
    * Get kline data for a specific symbol and interval
    */
@@ -50,3 +50,5 @@ export const marketService = {
     });
   },
 };
+
+export default marketService;
