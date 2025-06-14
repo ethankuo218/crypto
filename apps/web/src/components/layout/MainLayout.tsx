@@ -7,7 +7,7 @@ import Header from './Header';
 
 const MainLayout: React.FC = () => {
   return (
-    <div className="h-screen w-screen bg-background flex flex-col">
+    <div className="h-screen w-screen flex flex-col">
       <Header />
 
       <div className="flex-1 flex flex-col overflow-auto pt-16">

@@ -9,6 +9,7 @@ export default {
         text: {
           primary: '#FFFFFF',
           secondary: '#B1B5C3',
+          tertiary: '#CFCFCF',
         },
         rise: '#0ECB81',
         fall: '#F6465D',
