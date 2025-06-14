@@ -3,7 +3,6 @@ import { faArrowRight, faCircleCheck } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import homeDecoration from '../assets/home-decoration.svg';
 import homeFeatureImg1 from '../assets/home-feature-1.svg';
 import homeFeatureImg2 from '../assets/home-feature-2.svg';
 import homeFeatureImg3 from '../assets/home-feature-3.svg';
@@ -15,6 +14,7 @@ import homeImg4 from '../assets/home-img-4.png';
 import mobileImg1 from '../assets/mobile-img-1.svg';
 import mobileImg2 from '../assets/mobile-img-2.svg';
 import mobileImg3 from '../assets/mobile-img-3.svg';
+import AnimatedWaveLine from '../components/layout/AnimatedWaveLine';
 import Footer from '../components/layout/Footer';
 import Header from '../components/layout/Header';
 import MarketListPanel from '../components/market/MarketListPanel';
@@ -30,8 +30,8 @@ const Home: React.FC = () => {
 
       <div className="max-w-[1440px] mx-auto mt-12 flex flex-col gap-[160px]">
         {/* First Section */}
-        <section className="flex flex-col gap-3 pt-[80px]">
-          <div className=" flex justify-between">
+        <section className="flex flex-col gap-10 pt-[80px]">
+          <div className=" flex justify-between relative">
             <div className="max-w-[30vw] flex flex-col gap-6">
               <h1 className="text-text-primary text-6xl font-bold">
                 Buy & Sell Digital Assets In The Rocket
@@ -48,20 +48,20 @@ const Home: React.FC = () => {
               >
                 Get Started Now
               </button>
+
+              <div className="h-[110px]"></div>
             </div>
 
             <div className="max-w-[30vw]">
               <img className="w-full h-full" src={homeImg1} alt="home-img-1" />
             </div>
-          </div>
 
-          <div className="w-full h-full relative">
-            <MarketNavPanel />
-
-            <div className="absolute top-0 right-[-75px] pointer-events-none">
-              <img className="w-[710px] h-[315px]" src={homeDecoration} alt="home-decoration" />
+            <div className="absolute bottom-0 left-0 max-w-[900px]">
+              <AnimatedWaveLine />
             </div>
           </div>
+
+          <MarketNavPanel />
         </section>
 
         {/* Second Section */}
