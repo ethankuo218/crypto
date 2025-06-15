@@ -1,8 +1,8 @@
 import { createTimeline } from 'animejs';
 import React, { useEffect, useRef } from 'react';
 import logoBottomLeft from '../../assets/logo-bottom-left.svg';
+import logoMain from '../../assets/logo-main.svg';
 import logoTopRight from '../../assets/logo-top-right.svg';
-import logoMain from '../../assets/logo_main.svg';
 
 const LoadingSpinner: React.FC = () => {
   const spinnerRef = useRef<HTMLDivElement>(null);
@@ -67,17 +67,17 @@ const LoadingSpinner: React.FC = () => {
       className="w-screen h-screen flex items-center justify-center"
       style={{ willChange: 'filter' }}
     >
-      <div ref={spinnerRef} className="relative w-11 h-11">
-        <img className="absolute top-0 left-0 w-11 h-11" src={logoMain} alt="logo" />
+      <div ref={spinnerRef} className="relative w-[50px] h-[50px]">
+        <img className="absolute w-[50px] h-[50px]" src={logoMain} alt="logo" />
         <img
           ref={topRightRef}
-          className="absolute top-0 right-0 w-[17.66px] h-[17.66px]"
+          className="absolute w-[50px] h-[50px]"
           src={logoTopRight}
           alt="logo"
         />
         <img
           ref={bottomLeftRef}
-          className="absolute bottom-0 left-0 w-[17.66px] h-[17.66px]"
+          className="absolute w-[50px] h-[50px]"
           src={logoBottomLeft}
           alt="logo"
         />
