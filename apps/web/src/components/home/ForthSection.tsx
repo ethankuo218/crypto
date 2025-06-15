@@ -8,6 +8,10 @@ import homeImg3 from '../../assets/home-img-3.png';
 const ForthSection: React.FC = () => {
   const navigate = useNavigate();
   const imgRef = useRef<HTMLImageElement>(null);
+  const titleRef = useRef<HTMLDivElement>(null);
+  const item1Ref = useRef<HTMLDivElement>(null);
+  const item2Ref = useRef<HTMLDivElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
 
   const playEnterAnimation = () => {
     animate(imgRef.current!, {
@@ -15,6 +19,34 @@ const ForthSection: React.FC = () => {
       scale: 1,
       duration: 1000,
       easing: 'easeOutCubic',
+    });
+
+    animate(titleRef.current!, {
+      x: 0,
+      duration: 1000,
+      easing: 'easeOutBack',
+      delay: 100,
+    });
+
+    animate(item1Ref.current!, {
+      x: 0,
+      duration: 1000,
+      easing: 'easeOutBack',
+      delay: 200,
+    });
+
+    animate(item2Ref.current!, {
+      x: 0,
+      duration: 1000,
+      easing: 'easeOutBack',
+      delay: 300,
+    });
+
+    animate(buttonRef.current!, {
+      x: 0,
+      duration: 1000,
+      easing: 'easeOutBack',
+      delay: 400,
     });
   };
 
@@ -25,12 +57,44 @@ const ForthSection: React.FC = () => {
       duration: 1000,
       easing: 'linear',
     });
+
+    animate(titleRef.current!, {
+      x: 500,
+      duration: 1000,
+      easing: 'easeOutBack',
+    });
+
+    animate(item1Ref.current!, {
+      x: 500,
+      duration: 1000,
+      easing: 'easeOutBack',
+      delay: 100,
+    });
+
+    animate(item2Ref.current!, {
+      x: 500,
+      duration: 1000,
+      easing: 'easeOutBack',
+      delay: 200,
+    });
+
+    animate(buttonRef.current!, {
+      x: 500,
+      duration: 1000,
+      easing: 'easeOutBack',
+    });
+
+    animate(buttonRef.current!, {
+      x: 500,
+      duration: 1000,
+      easing: 'easeOutBack',
+    });
   };
 
   useEffect(() => {
     onScroll({
       target: imgRef.current!,
-      enter: 'bottom top',
+      enter: 'bottom top+=100',
       leave: 'top bottom',
       onEnter: playEnterAnimation,
       onLeave: playLeaveAnimation,
@@ -45,7 +109,7 @@ const ForthSection: React.FC = () => {
       </div>
 
       <div className="flex-1 flex flex-col gap-6">
-        <div className="flex flex-col gap-4">
+        <div ref={titleRef} className="flex flex-col gap-4">
           <h2 className="text-text-primary text-5xl font-bold">What Is Rockie</h2>
           <p className="text-text-secondary text-xl">
             Experience a variety of trading on Bitcost. You can use various types of coin
@@ -53,7 +117,7 @@ const ForthSection: React.FC = () => {
           </p>
         </div>
 
-        <div className="flex gap-4">
+        <div ref={item1Ref} className="flex gap-4">
           <div className="h-8 flex items-center justify-center">
             <FontAwesomeIcon icon={faCircleCheck} className="text-primary text-xl" />
           </div>
@@ -70,7 +134,7 @@ const ForthSection: React.FC = () => {
           </div>
         </div>
 
-        <div className="flex gap-4">
+        <div ref={item2Ref} className="flex gap-4">
           <div className="h-8 flex items-center justify-center">
             <FontAwesomeIcon icon={faCircleCheck} className="text-primary text-xl" />
           </div>
@@ -88,6 +152,7 @@ const ForthSection: React.FC = () => {
         </div>
 
         <button
+          ref={buttonRef}
           className="bg-primary text-background text-[16px] leading-[16px] font-medium px-6 py-4 rounded-full max-w-[185px]"
           onClick={() => navigate('/market')}
         >

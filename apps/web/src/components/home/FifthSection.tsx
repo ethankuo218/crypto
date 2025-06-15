@@ -8,13 +8,14 @@ import homeFeatureImg3 from '../../assets/home-feature-img-3.svg';
 import homeFeatureImg4 from '../../assets/home-feature-img-4.svg';
 
 const FifthSection: React.FC = () => {
-  const sectionRef = useRef<HTMLDivElement>(null);
+  const cardConatinerRef = useRef<HTMLDivElement>(null);
+  const titleRef = useRef<HTMLDivElement>(null);
   const cardRef1 = useRef<HTMLDivElement>(null);
   const cardRef2 = useRef<HTMLDivElement>(null);
   const cardRef3 = useRef<HTMLDivElement>(null);
   const cardRef4 = useRef<HTMLDivElement>(null);
 
-  const playEnterAnimation = () => {
+  const playCardEnterAnimation = () => {
     animate(cardRef1.current!, {
       x: 0,
       opacity: 1,
@@ -46,7 +47,7 @@ const FifthSection: React.FC = () => {
     });
   };
 
-  const playLeaveAnimation = () => {
+  const playCardLeaveAnimation = () => {
     animate(cardRef1.current!, {
       x: -500,
       opacity: 0.2,
@@ -80,16 +81,35 @@ const FifthSection: React.FC = () => {
 
   useEffect(() => {
     onScroll({
-      target: sectionRef.current!,
+      target: titleRef.current!,
       enter: 'bottom top',
       leave: 'top bottom',
-      onEnter: playEnterAnimation,
-      onLeave: playLeaveAnimation,
+      onEnter: () =>
+        animate(titleRef.current!, {
+          y: 0,
+          duration: 1000,
+          easing: 'easeOutBack',
+          delay: 100,
+        }),
+      onLeave: () =>
+        animate(titleRef.current!, {
+          y: 100,
+          duration: 1000,
+          easing: 'easeOutBack',
+        }),
+    });
+
+    onScroll({
+      target: cardConatinerRef.current!,
+      enter: 'bottom top',
+      leave: 'top bottom-=100',
+      onEnter: playCardEnterAnimation,
+      onLeave: playCardLeaveAnimation,
     });
   }, []);
   return (
-    <section ref={sectionRef} className="flex flex-col gap-10 py-[80px]">
-      <div className="flex flex-col gap-4">
+    <section className="flex flex-col gap-10 py-[80px]">
+      <div ref={titleRef} className="flex flex-col gap-4">
         <h2 className="text-center text-text-primary text-5xl font-bold">
           CryptoCap Amazing Faetures
         </h2>
@@ -98,7 +118,7 @@ const FifthSection: React.FC = () => {
         </p>
       </div>
 
-      <div className="flex gap-6">
+      <div ref={cardConatinerRef} className="flex gap-6">
         <div
           ref={cardRef1}
           className="bg-[#212328] rounded-[18px] p-7 w-[330px] border border-[#3F4555]"

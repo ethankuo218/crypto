@@ -9,8 +9,14 @@ import mobileImg3 from '../../assets/mobile-img-3.svg';
 
 const SixthSection: React.FC = () => {
   const imgRef = useRef<HTMLImageElement>(null);
+  const textContainerRef = useRef<HTMLDivElement>(null);
+  const titleRef = useRef<HTMLDivElement>(null);
+  const item1Ref = useRef<HTMLDivElement>(null);
+  const item2Ref = useRef<HTMLDivElement>(null);
+  const item3Ref = useRef<HTMLDivElement>(null);
+  const buttonContainerRef = useRef<HTMLDivElement>(null);
 
-  const playEnterAnimation = () => {
+  const playImgEnterAnimation = () => {
     animate(imgRef.current!, {
       opacity: 1,
       scale: 1,
@@ -19,7 +25,7 @@ const SixthSection: React.FC = () => {
     });
   };
 
-  const playLeaveAnimation = () => {
+  const playImgLeaveAnimation = () => {
     animate(imgRef.current!, {
       opacity: 0.2,
       scale: 0,
@@ -28,13 +34,94 @@ const SixthSection: React.FC = () => {
     });
   };
 
+  const playTextEnterAnimation = () => {
+    animate(titleRef.current!, {
+      x: 0,
+      duration: 1000,
+      easing: 'easeOutBack',
+      delay: 100,
+    });
+
+    animate(item1Ref.current!, {
+      x: 0,
+      duration: 1000,
+      easing: 'easeOutBack',
+      delay: 200,
+    });
+
+    animate(item2Ref.current!, {
+      x: 0,
+      duration: 1000,
+      easing: 'easeOutBack',
+      delay: 300,
+    });
+
+    animate(item3Ref.current!, {
+      x: 0,
+      duration: 1000,
+      easing: 'easeOutBack',
+      delay: 400,
+    });
+
+    animate(buttonContainerRef.current!, {
+      x: 0,
+      duration: 1000,
+      easing: 'easeOutBack',
+      delay: 500,
+    });
+  };
+
+  const playTextLeaveAnimation = () => {
+    animate(titleRef.current!, {
+      x: 500,
+      duration: 1000,
+      easing: 'easeOutBack',
+    });
+
+    animate(item1Ref.current!, {
+      x: 500,
+      duration: 1000,
+      easing: 'easeOutBack',
+      delay: 100,
+    });
+
+    animate(item2Ref.current!, {
+      x: 500,
+      duration: 1000,
+      easing: 'easeOutBack',
+      delay: 200,
+    });
+
+    animate(item3Ref.current!, {
+      x: 500,
+      duration: 1000,
+      easing: 'easeOutBack',
+      delay: 300,
+    });
+
+    animate(buttonContainerRef.current!, {
+      x: 500,
+      duration: 1000,
+      easing: 'easeOutBack',
+      delay: 500,
+    });
+  };
+
   useEffect(() => {
     onScroll({
       target: imgRef.current!,
       enter: 'bottom top',
       leave: 'top bottom',
-      onEnter: playEnterAnimation,
-      onLeave: playLeaveAnimation,
+      onEnter: playImgEnterAnimation,
+      onLeave: playImgLeaveAnimation,
+    });
+
+    onScroll({
+      target: textContainerRef.current!,
+      enter: 'bottom top',
+      leave: 'top bottom',
+      onEnter: playTextEnterAnimation,
+      onLeave: playTextLeaveAnimation,
     });
   }, []);
 
@@ -44,8 +131,8 @@ const SixthSection: React.FC = () => {
         <img ref={imgRef} className="rounded-3xl overflow-hidden" src={homeImg4} alt="home-img-4" />
       </div>
 
-      <div className="flex flex-col gap-6 col-span-2">
-        <div className="flex flex-col gap-4">
+      <div ref={textContainerRef} className="flex flex-col gap-6 col-span-2">
+        <div ref={titleRef} className="flex flex-col gap-4">
           <h2 className="text-text-primary text-5xl font-bold">Trade & invest anytime,anywhere</h2>
 
           <p className="text-text-secondary text-xl">
@@ -56,7 +143,7 @@ const SixthSection: React.FC = () => {
         </div>
 
         <div className="flex flex-col gap-6">
-          <div className="flex gap-6">
+          <div ref={item1Ref} className="flex gap-6">
             <div className="h-full w-[50px] rounded-full flex items-center justify-center">
               <img src={mobileImg1} alt="mobile-img-1" />
             </div>
@@ -70,7 +157,7 @@ const SixthSection: React.FC = () => {
             </div>
           </div>
 
-          <div className="flex gap-6">
+          <div ref={item2Ref} className="flex gap-6">
             <div className="h-full w-[50px] rounded-full flex items-center justify-center">
               <img src={mobileImg2} alt="mobile-img-2" />
             </div>
@@ -85,7 +172,7 @@ const SixthSection: React.FC = () => {
             </div>
           </div>
 
-          <div className="flex gap-6">
+          <div ref={item3Ref} className="flex gap-6">
             <div className="h-full w-[50px] rounded-full flex items-center justify-center">
               <img src={mobileImg3} alt="mobile-img-3" />
             </div>
@@ -101,7 +188,7 @@ const SixthSection: React.FC = () => {
           </div>
         </div>
 
-        <div className="flex gap-6">
+        <div ref={buttonContainerRef} className="flex gap-6">
           <button className="flex gap-2 bg-[#0C0C0C] text-text-primary p-4 rounded-2xl max-w-[190px] border border-[#3F4555] items-center">
             <FontAwesomeIcon icon={faApple} className="text-text-primary text-[35px]" />
 

@@ -75,7 +75,7 @@ const Footer: React.FC = () => (
     <div className="bg-[#23242A] py-4 px-8 flex justify-center mx-auto">
       <div className="flex justify-between w-full max-w-[1440px]">
         <span className="text-text-secondary text-sm">
-          Copyright © 2022 Free For All Of The World People
+          Copyright © 2025 Free For All Of The World People
         </span>
         <div className="flex gap-4 mt-2 md:mt-0">
           {/* Replace # with your social links */}
