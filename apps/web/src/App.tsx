@@ -1,19 +1,18 @@
 import { Route, Routes } from 'react-router-dom';
 import MainLayout from './components/layout/MainLayout';
-import Home from './pages/Home';
 import { routes } from './routes';
 
 function App() {
   return (
-    <Routes>
-      <Route key={'/'} path="/" element={<Home />}></Route>
-
-      <Route element={<MainLayout />}>
-        {routes.map(({ path, element }) => (
-          <Route key={path} path={path} element={element} />
-        ))}
-      </Route>
-    </Routes>
+    <MainLayout>
+      <Routes>
+        <Route>
+          {routes.map(({ path, element }) => (
+            <Route key={path} path={path} element={element} />
+          ))}
+        </Route>
+      </Routes>
+    </MainLayout>
   );
 }
 

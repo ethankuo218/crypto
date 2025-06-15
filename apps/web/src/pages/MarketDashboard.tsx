@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import AnnouncementBar from '../components/layout/AnnouncementBar';
 import MarketChart from '../components/market/MarketChart';
 import { MyList } from '../components/market/MyList';
 
@@ -10,19 +11,23 @@ const MarketDashboard: React.FC = () => {
   };
 
   return (
-    <div className="flex h-full">
-      <div className="w-[300px] border-r border-[#2B3139]">
-        <MyList
-          onSymbolSelect={handleSymbolSelect}
-          selectedSymbol={selectedSymbol}
-          onInitialData={handleSymbolSelect}
-        />
-      </div>
+    <>
+      <AnnouncementBar />
 
-      <div className="flex-1 p-4">
-        <MarketChart symbol={selectedSymbol} />
+      <div className="flex h-full">
+        <div className="w-[300px] border-r border-[#2B3139]">
+          <MyList
+            onSymbolSelect={handleSymbolSelect}
+            selectedSymbol={selectedSymbol}
+            onInitialData={handleSymbolSelect}
+          />
+        </div>
+
+        <div className="flex-1 p-4">
+          <MarketChart symbol={selectedSymbol} />
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
