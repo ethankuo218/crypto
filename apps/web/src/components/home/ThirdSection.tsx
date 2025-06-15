@@ -2,6 +2,7 @@ import { animate, onScroll } from 'animejs';
 import { useEffect, useRef } from 'react';
 import homeImg2 from '../../assets/home-img-2.png';
 import CountUp, { CountUpRef } from '../common/CountUp';
+import MapDot, { MapDotRef } from '../common/MapDot';
 
 const ThirdSection: React.FC = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -9,6 +10,30 @@ const ThirdSection: React.FC = () => {
   const countUpRef2 = useRef<CountUpRef>(null);
   const countUpRef3 = useRef<CountUpRef>(null);
   const imgRef = useRef<HTMLDivElement>(null);
+  const mapDotRefs = useRef<MapDotRef[]>([]);
+
+  const mapDotList = [
+    { x: 16, y: 24 },
+    { x: 22, y: 18 },
+    { x: 28, y: 21 },
+    { x: 20, y: 38 },
+    { x: 24, y: 52 },
+    { x: 38, y: 5 },
+    { x: 44, y: 18 },
+    { x: 70, y: 10 },
+    { x: 60, y: 16 },
+    { x: 52, y: 32 },
+    { x: 56, y: 40 },
+    { x: 57, y: 57 },
+    { x: 74, y: 28 },
+    { x: 80, y: 22 },
+    { x: 78, y: 44 },
+    { x: 86, y: 35 },
+    { x: 44, y: 45 },
+    { x: 54, y: 60 },
+    { x: 28, y: 60 },
+    { x: 80, y: 75 },
+  ];
 
   useEffect(() => {
     const playEnterAnimation = () => {
@@ -19,7 +44,9 @@ const ThirdSection: React.FC = () => {
       animate(imgRef.current!, {
         opacity: [{ to: 1, duration: 1000, easing: 'easeOutBack' }],
         scale: [{ to: 1, duration: 1000, easing: 'linear' }],
-        delay: 100,
+        onComplete: () => {
+          mapDotRefs.current.forEach(dot => dot.trigger());
+        },
       });
     };
 
@@ -29,6 +56,8 @@ const ThirdSection: React.FC = () => {
         scale: [{ to: 0, duration: 1000, easing: 'linear' }],
         delay: 0,
       });
+
+      mapDotRefs.current.forEach(dot => dot.reset());
     };
 
     onScroll({
@@ -98,7 +127,21 @@ const ThirdSection: React.FC = () => {
         </div>
 
         <div ref={imgRef} className="flex-1">
-          <img src={homeImg2} alt="home-img-2" />
+          <div className="relative w-[661px] h-[334px] mx-auto">
+            <img src={homeImg2} alt="home-img-2" className="w-full h-full object-contain" />
+            <div className="absolute top-0 left-0 w-full h-full">
+              {mapDotList.map((dot, index) => (
+                <MapDot
+                  key={index}
+                  x={dot.x}
+                  y={dot.y}
+                  ref={el => {
+                    el && (mapDotRefs.current[index] = el);
+                  }}
+                />
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </section>
