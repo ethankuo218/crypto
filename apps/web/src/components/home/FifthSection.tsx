@@ -17,69 +17,69 @@ const FifthSection: React.FC = () => {
 
   const playCardEnterAnimation = () => {
     animate(cardRef1.current!, {
-      x: 0,
-      opacity: 1,
-      duration: 1000,
-      easing: 'easeOutCubic',
-      delay: 800,
+      x: [{ to: 0, duration: 1000, easing: 'easeOutCubic' }],
+      opacity: [{ to: 1, duration: 1000, easing: 'linear' }],
+      delay: 200,
     });
 
     animate(cardRef2.current!, {
-      x: 0,
-      opacity: 1,
-      duration: 1000,
-      easing: 'easeOutCubic',
+      x: [{ to: 0, duration: 1000, easing: 'easeOutCubic' }],
+      opacity: [{ to: 1, duration: 1000, easing: 'linear' }],
     });
 
     animate(cardRef3.current!, {
-      x: 0,
-      opacity: 1,
-      duration: 1000,
-      easing: 'easeOutCubic',
+      x: [{ to: 0, duration: 1000, easing: 'easeOutCubic' }],
+      opacity: [{ to: 1, duration: 1000, easing: 'linear' }],
     });
 
     animate(cardRef4.current!, {
-      x: 0,
-      opacity: 1,
-      duration: 1000,
-      easing: 'easeOutCubic',
-      delay: 800,
+      x: [{ to: 0, duration: 1000, easing: 'easeOutCubic' }],
+      opacity: [{ to: 1, duration: 1000, easing: 'linear' }],
+      delay: 200,
     });
   };
 
   const playCardLeaveAnimation = () => {
     animate(cardRef1.current!, {
-      x: -500,
-      opacity: 0.2,
-      duration: 1000,
-      easing: 'linear',
+      x: [{ to: -500, duration: 1000, easing: 'linear' }],
+      opacity: [{ to: 0.2, duration: 1000, easing: 'linear' }],
     });
 
     animate(cardRef2.current!, {
-      x: -500,
-      opacity: 0.2,
-      duration: 1000,
-      easing: 'linear',
+      x: [{ to: -500, duration: 1000, easing: 'linear' }],
+      opacity: [{ to: 0.2, duration: 1000, easing: 'linear' }],
       delay: 800,
     });
 
     animate(cardRef3.current!, {
-      x: 500,
-      opacity: 0.2,
-      duration: 1000,
-      easing: 'linear',
+      x: [{ to: 500, duration: 1000, easing: 'linear' }],
+      opacity: [{ to: 0.2, duration: 1000, easing: 'linear' }],
       delay: 800,
     });
 
     animate(cardRef4.current!, {
-      x: 500,
-      opacity: 0.2,
-      duration: 1000,
-      easing: 'linear',
+      x: [{ to: 500, duration: 1000, easing: 'linear' }],
+      opacity: [{ to: 0.2, duration: 1000, easing: 'linear' }],
     });
   };
 
   useEffect(() => {
+    if (
+      !titleRef.current ||
+      !cardConatinerRef.current ||
+      !cardRef1.current ||
+      !cardRef2.current ||
+      !cardRef3.current ||
+      !cardRef4.current
+    )
+      return;
+
+    titleRef.current!.style.transform = 'translateY(100px)';
+    cardRef1.current!.style.transform = 'translateX(-500px)';
+    cardRef2.current!.style.transform = 'translateX(-500px)';
+    cardRef3.current!.style.transform = 'translateX(500px)';
+    cardRef4.current!.style.transform = 'translateX(500px)';
+
     onScroll({
       target: titleRef.current!,
       enter: 'bottom top',

@@ -15,37 +15,27 @@ const ForthSection: React.FC = () => {
 
   const playEnterAnimation = () => {
     animate(imgRef.current!, {
-      opacity: 1,
-      scale: 1,
-      duration: 1000,
-      easing: 'easeOutCubic',
+      scale: [{ to: 1, duration: 1000, easing: 'easeOutBack' }],
+      opacity: [{ to: 1, duration: 1000, easing: 'linear' }],
     });
 
     animate(titleRef.current!, {
-      x: 0,
-      duration: 1000,
-      easing: 'easeOutBack',
+      x: [{ to: 0, duration: 1000, easing: 'easeOutBack' }],
       delay: 100,
     });
 
     animate(item1Ref.current!, {
-      x: 0,
-      duration: 1000,
-      easing: 'easeOutBack',
+      x: [{ to: 0, duration: 1000, easing: 'easeOutBack' }],
       delay: 200,
     });
 
     animate(item2Ref.current!, {
-      x: 0,
-      duration: 1000,
-      easing: 'easeOutBack',
+      x: [{ to: 0, duration: 1000, easing: 'easeOutBack' }],
       delay: 300,
     });
 
     animate(buttonRef.current!, {
-      x: 0,
-      duration: 1000,
-      easing: 'easeOutBack',
+      x: [{ to: 0, duration: 1000, easing: 'easeOutBack' }],
       delay: 400,
     });
   };
@@ -92,6 +82,16 @@ const ForthSection: React.FC = () => {
   };
 
   useEffect(() => {
+    if (!imgRef.current) return;
+
+    imgRef.current!.style.transform = 'scale(0.2)';
+    imgRef.current!.style.opacity = '0';
+
+    titleRef.current!.style.transform = 'translateX(500px)';
+    item1Ref.current!.style.transform = 'translateX(500px)';
+    item2Ref.current!.style.transform = 'translateX(500px)';
+    buttonRef.current!.style.transform = 'translateX(500px)';
+
     onScroll({
       target: imgRef.current!,
       enter: 'bottom top+=100',

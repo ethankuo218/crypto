@@ -18,96 +18,92 @@ const SixthSection: React.FC = () => {
 
   const playImgEnterAnimation = () => {
     animate(imgRef.current!, {
-      opacity: 1,
-      scale: 1,
-      duration: 1000,
-      easing: 'easeOutCubic',
+      scale: [{ to: 1, duration: 1000, easing: 'easeOutBack' }],
+      opacity: [{ to: 1, duration: 1000, easing: 'linear' }],
     });
   };
 
   const playImgLeaveAnimation = () => {
     animate(imgRef.current!, {
-      opacity: 0.2,
-      scale: 0,
-      duration: 1000,
-      easing: 'linear',
+      scale: [{ to: 0, duration: 1000, easing: 'linear' }],
+      opacity: [{ to: 0.2, duration: 1000, easing: 'linear' }],
     });
   };
 
   const playTextEnterAnimation = () => {
     animate(titleRef.current!, {
-      x: 0,
-      duration: 1000,
-      easing: 'easeOutBack',
+      x: [{ to: 0, duration: 1000, easing: 'easeOutBack' }],
       delay: 100,
     });
 
     animate(item1Ref.current!, {
-      x: 0,
-      duration: 1000,
-      easing: 'easeOutBack',
+      x: [{ to: 0, duration: 1000, easing: 'easeOutBack' }],
       delay: 200,
     });
 
     animate(item2Ref.current!, {
-      x: 0,
-      duration: 1000,
-      easing: 'easeOutBack',
+      x: [{ to: 0, duration: 1000, easing: 'easeOutBack' }],
       delay: 300,
     });
 
     animate(item3Ref.current!, {
-      x: 0,
-      duration: 1000,
-      easing: 'easeOutBack',
+      x: [{ to: 0, duration: 1000, easing: 'easeOutBack' }],
       delay: 400,
     });
 
     animate(buttonContainerRef.current!, {
-      x: 0,
-      duration: 1000,
-      easing: 'easeOutBack',
+      x: [{ to: 0, duration: 1000, easing: 'easeOutBack' }],
       delay: 500,
     });
   };
 
   const playTextLeaveAnimation = () => {
     animate(titleRef.current!, {
-      x: 500,
-      duration: 1000,
-      easing: 'easeOutBack',
+      x: [{ to: 500, duration: 1000, easing: 'easeOutBack' }],
     });
 
     animate(item1Ref.current!, {
-      x: 500,
-      duration: 1000,
-      easing: 'easeOutBack',
+      x: [{ to: 500, duration: 1000, easing: 'easeOutBack' }],
       delay: 100,
     });
 
     animate(item2Ref.current!, {
-      x: 500,
-      duration: 1000,
-      easing: 'easeOutBack',
+      x: [{ to: 500, duration: 1000, easing: 'easeOutBack' }],
       delay: 200,
     });
 
     animate(item3Ref.current!, {
-      x: 500,
-      duration: 1000,
-      easing: 'easeOutBack',
+      x: [{ to: 500, duration: 1000, easing: 'easeOutBack' }],
       delay: 300,
     });
 
     animate(buttonContainerRef.current!, {
-      x: 500,
-      duration: 1000,
-      easing: 'easeOutBack',
+      x: [{ to: 500, duration: 1000, easing: 'easeOutBack' }],
       delay: 500,
     });
   };
 
   useEffect(() => {
+    if (
+      !imgRef.current ||
+      !textContainerRef.current ||
+      !titleRef.current ||
+      !item1Ref.current ||
+      !item2Ref.current ||
+      !item3Ref.current ||
+      !buttonContainerRef.current
+    )
+      return;
+
+    imgRef.current!.style.transform = 'scale(0.2)';
+    imgRef.current!.style.opacity = '0';
+
+    titleRef.current!.style.transform = 'translateX(500px)';
+    item1Ref.current!.style.transform = 'translateX(500px)';
+    item2Ref.current!.style.transform = 'translateX(500px)';
+    item3Ref.current!.style.transform = 'translateX(500px)';
+    buttonContainerRef.current!.style.transform = 'translateX(500px)';
+
     onScroll({
       target: imgRef.current!,
       enter: 'bottom top',

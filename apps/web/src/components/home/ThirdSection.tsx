@@ -9,7 +9,7 @@ const ThirdSection: React.FC = () => {
   const countUpRef1 = useRef<CountUpRef>(null);
   const countUpRef2 = useRef<CountUpRef>(null);
   const countUpRef3 = useRef<CountUpRef>(null);
-  const imgRef = useRef<HTMLDivElement>(null);
+  const imgRef = useRef<HTMLImageElement>(null);
   const mapDotRefs = useRef<MapDotRef[]>([]);
 
   const mapDotList = [
@@ -36,6 +36,11 @@ const ThirdSection: React.FC = () => {
   ];
 
   useEffect(() => {
+    if (!imgRef.current) return;
+
+    imgRef.current!.style.transform = 'scale(0.2)';
+    imgRef.current!.style.opacity = '0';
+
     const playEnterAnimation = () => {
       countUpRef1.current?.start();
       countUpRef2.current?.start();
@@ -55,9 +60,10 @@ const ThirdSection: React.FC = () => {
         opacity: [{ to: 0.2, duration: 1000, easing: 'easeOutCubic' }],
         scale: [{ to: 0, duration: 1000, easing: 'linear' }],
         delay: 0,
+        onComplete: () => {
+          mapDotRefs.current.forEach(dot => dot.reset());
+        },
       });
-
-      mapDotRefs.current.forEach(dot => dot.reset());
     };
 
     onScroll({
@@ -125,9 +131,14 @@ const ThirdSection: React.FC = () => {
           </div>
         </div>
 
-        <div ref={imgRef} className="flex-1">
+        <div className="flex-1">
           <div className="relative w-[661px] h-[334px] mx-auto">
-            <img src={homeImg2} alt="home-img-2" className="w-full h-full object-contain" />
+            <img
+              ref={imgRef}
+              src={homeImg2}
+              alt="home-img-2"
+              className="w-full h-full object-contain"
+            />
             <div className="absolute top-0 left-0 w-full h-full">
               {mapDotList.map((dot, index) => (
                 <MapDot

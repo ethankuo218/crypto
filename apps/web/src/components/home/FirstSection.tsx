@@ -38,6 +38,7 @@ const FirstSection: React.FC = () => {
     imgRef.current.style.opacity = '0';
 
     marketNavPanelRef.current.style.opacity = '0';
+    marketNavPanelRef.current.style.transform = 'translateY(100px)';
 
     const playEnterAnimation = () => {
       animate(textContainerRef.current!, {
@@ -64,6 +65,7 @@ const FirstSection: React.FC = () => {
       });
 
       animate(marketNavPanelRef.current!, {
+        y: [{ to: 0, duration: 1000, easing: 'easeInOutQuad' }],
         opacity: [{ to: 1, duration: 1000, easing: 'linear' }],
         delay: 300,
       });
@@ -94,7 +96,8 @@ const FirstSection: React.FC = () => {
       });
 
       animate(marketNavPanelRef.current!, {
-        opacity: [{ to: 0, duration: 1000, easing: 'linear' }],
+        y: [{ to: 100, duration: 1000, easing: 'easeInOutQuad' }],
+        opacity: [{ to: 0, duration: 1000, easing: 'easeInOutQuad' }],
         delay: 0,
       });
     };
