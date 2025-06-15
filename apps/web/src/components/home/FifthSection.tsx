@@ -83,7 +83,6 @@ const FifthSection: React.FC = () => {
       target: sectionRef.current!,
       enter: 'bottom top',
       leave: 'top bottom',
-      debug: true,
       onEnter: playEnterAnimation,
       onLeave: playLeaveAnimation,
     });

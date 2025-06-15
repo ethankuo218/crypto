@@ -32,7 +32,6 @@ const SecondSection: React.FC = () => {
       target: sectionRef.current,
       enter: 'bottom top',
       leave: 'top bottom-=200',
-      debug: true,
       onEnter: playEnterAnimation,
       onLeave: playLeaveAnimation,
     });

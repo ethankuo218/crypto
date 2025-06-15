@@ -103,7 +103,6 @@ const FirstSection: React.FC = () => {
       target: sectionRef.current,
       enter: 'bottom top+=100',
       leave: 'top bottom-=200',
-      debug: true,
       onEnter: playEnterAnimation,
       onLeave: playLeaveAnimation,
     });

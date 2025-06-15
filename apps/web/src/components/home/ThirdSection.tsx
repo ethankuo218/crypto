@@ -64,7 +64,6 @@ const ThirdSection: React.FC = () => {
       target: sectionRef.current!,
       enter: 'bottom top+=200',
       leave: 'top bottom-=100',
-      debug: true,
       onEnter: playEnterAnimation,
       onLeave: playLeaveAnimation,
     });

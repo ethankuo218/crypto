@@ -32,7 +32,6 @@ const ForthSection: React.FC = () => {
       target: imgRef.current!,
       enter: 'bottom top',
       leave: 'top bottom',
-      debug: true,
       onEnter: playEnterAnimation,
       onLeave: playLeaveAnimation,
     });
