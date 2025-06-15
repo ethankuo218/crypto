@@ -14,7 +14,7 @@ const MarketDashboard: React.FC = () => {
     <>
       <AnnouncementBar />
 
-      <div className="flex h-full">
+      <div className="flex h-full p-5">
         <div className="w-[300px] border-r border-[#2B3139]">
           <MyList
             onSymbolSelect={handleSymbolSelect}

@@ -8,7 +8,7 @@ import ThirdSection from '../components/home/ThirdSection';
 
 const Home: React.FC = () => {
   return (
-    <div className="max-w-[1440px] mx-auto flex flex-col gap-[160px] px-5">
+    <div className="max-w-[1440px] mx-auto flex flex-col gap-[160px] pt-8 px-5">
       <FirstSection />
 
       <SecondSection />

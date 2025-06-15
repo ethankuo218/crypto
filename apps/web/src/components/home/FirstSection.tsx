@@ -109,7 +109,7 @@ const FirstSection: React.FC = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} className="flex flex-col gap-10 pt-[80px]">
+    <section ref={sectionRef} className="flex flex-col gap-10">
       <div className=" flex justify-between relative">
         <div className="max-w-[30vw] flex flex-col gap-6">
           <div ref={textContainerRef} className="flex flex-col gap-6">

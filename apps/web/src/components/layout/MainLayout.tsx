@@ -9,7 +9,7 @@ const MainLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     <div className="h-screen w-screen flex flex-col">
       <Header />
 
-      <main className="flex-1">
+      <main className="pt-12">
         <ErrorBoundary>
           <Suspense fallback={<LoadingSpinner />}>{children}</Suspense>
         </ErrorBoundary>
